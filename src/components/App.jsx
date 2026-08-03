@@ -1,0 +1,50 @@
+import { useState } from "react";
+import { Card } from "./Card.jsx";
+
+export function App() {
+  const [scores, setScores] = useState({ currentScore: 0, highScore: 0 });
+
+  const [pokemon, setPokemon] = useState([
+    { name: "togepi", status: false },
+    { name: "rayquaza", status: false },
+    { name: "sableye", status: false },
+    { name: "lucario", status: false },
+    { name: "marshadow", status: false },
+    { name: "crobat", status: false },
+    { name: "wynaut", status: false },
+    { name: "charmander", status: false },
+    { name: "suicune", status: false },
+    { name: "mismagius", status: false },
+    { name: "latias", status: false },
+    { name: "mantyke", status: false },
+  ]);
+
+  return (
+    <>
+      <div id="title">
+        <h1>Pokemon Memory Game</h1>
+        <p>
+          Earn points by clicking on a image but don't click on the same image
+          more than once!
+        </p>
+      </div>
+
+      <div id="scores">
+        <p>Score: {scores.currentScore}</p>
+        <p>High Score: {scores.highScore}</p>
+      </div>
+
+      <div className="card-container">
+        {pokemon.map((item) => (
+          <Card
+            onClick={() => handleClick(item.name)}
+            name={item.name}
+            url={item.url || ""}
+            key={item.name}
+            status={item.status}
+          />
+        ))}
+      </div>
+    </>
+  );
+}
