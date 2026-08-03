@@ -19,7 +19,7 @@ describe("Return object containing name and sprite url", () => {
   ];
 
   pokemonTests.forEach((pokemon) => {
-    test(`Return ${item.input}'s data`, async () => {
+    test(`Return ${pokemon.input}'s data`, async () => {
       //Mock successful PokeAPI response
       const mockResponse = {
         forms: [{ name: pokemon.name }],
