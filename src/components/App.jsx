@@ -19,6 +19,28 @@ export function App() {
     { name: "mantyke", status: false },
   ]);
 
+  function handleClick(name) {
+    const clicked = pokemon.find((p) => p.name === name);
+
+    if (clicked && clicked.status === false) {
+      const nextScore = scores.currentScore + 1;
+      const nextHighScore = Math.max(nextScore, scores.highScore);
+
+      setScores({ currentScore: nextScore, highScore: nextHighScore });
+
+      //Update the clicked pokemon's status
+      setPokemon((prev) =>
+        prev.map((p) => (p.name === name ? { ...p, status: true } : p))
+      );
+    } else {
+      //Reset current score
+      setScores((prev) => ({ ...prev, currentScore: 0 }));
+
+      //Reset game board status
+      setPokemon((prev) => prev.map((p) => ({ ...p, status: false })));
+    }
+  }
+
   return (
     <>
       <div id="title">
