@@ -31,6 +31,18 @@ describe("Return object containing name and sprite url", () => {
         ok: true,
         json: async () => mockResponse,
       });
+
+      const result = await PokeAPI.getData(pokemon.input);
+
+      expect(result).toMatchObject({
+        name: pokemon.name,
+        image: pokemon.url,
+      });
+
+      //Verify fetch was called with the correct URL
+      expect(global.fetch).toHaveBeenCalledWith(
+        `https://pokeapi.co/api/v2/pokemon/${pokemon.input}`
+      );
     });
   });
 });
