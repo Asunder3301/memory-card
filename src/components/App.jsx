@@ -60,19 +60,23 @@ export function App() {
       setScores({ currentScore: nextScore, highScore: nextHighScore });
 
       //Update the clicked pokemon's status
-      shuffleCards(
-        setPokemon((prev) =>
-          prev.map((p) => (p.name === name ? { ...p, status: true } : p))
-        )
-      );
+      setPokemon((prev) => {
+        const updated = prev.map((p) =>
+          p.name === name ? { ...p, status: true } : p
+        );
+
+        return shuffleCards(updated);
+      });
     } else {
       //Reset current score
       setScores((prev) => ({ ...prev, currentScore: 0 }));
 
       //Reset game board status
-      shuffleCards(
-        setPokemon((prev) => prev.map((p) => ({ ...p, status: false })))
-      );
+      setPokemon((prev) => {
+        const reset = prev.map((p) => ({ ...p, status: false }));
+
+        return shuffleCards(reset);
+      });
     }
   }
 
