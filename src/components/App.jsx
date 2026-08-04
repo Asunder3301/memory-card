@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "./Card.jsx";
+import { PokeAPI } from "../modules/pokeapi.js";
 
 export function App() {
   const [scores, setScores] = useState({ currentScore: 0, highScore: 0 });
@@ -18,6 +19,19 @@ export function App() {
     { name: "latias", status: false },
     { name: "mantyke", status: false },
   ]);
+
+  useEffect(() => {
+    async function loadImages() {
+      const updatedPokemon = await Promise.all(
+        pokemon.map(async (p) => {
+          const data = await PokeAPI.getData(p.name);
+          return { ...p, url: data.image };
+        })
+      );
+      setPokemon(updatedPokemon);
+    }
+    loadImages();
+  }, []);
 
   function handleClick(name) {
     const clicked = pokemon.find((p) => p.name === name);
