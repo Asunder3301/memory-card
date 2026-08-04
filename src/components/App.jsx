@@ -22,6 +22,7 @@ export function App() {
   const [pokemon, setPokemon] = useState([]);
 
   useEffect(() => {
+    //Loop through pokemon array and give each obj a url key
     async function loadImages() {
       const updatedPokemon = await Promise.all(
         initial_pokemon.map(async (p) => {
@@ -29,10 +30,23 @@ export function App() {
           return { ...p, url: data.image };
         })
       );
-      setPokemon(updatedPokemon);
+      setPokemon(shuffleCards(updatedPokemon));
     }
     loadImages();
   }, []);
+
+  function shuffleCards(array) {
+    //Loop through array backwards
+    for (let i = array.length - 1; i > 0; i--) {
+      //Pick random index from 0 to i
+      const j = Math.floor(Math.random() * (i - 1));
+
+      //Swap elements
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+  }
 
   function handleClick(name) {
     const clicked = pokemon.find((p) => p.name === name);
@@ -44,15 +58,19 @@ export function App() {
       setScores({ currentScore: nextScore, highScore: nextHighScore });
 
       //Update the clicked pokemon's status
-      setPokemon((prev) =>
-        prev.map((p) => (p.name === name ? { ...p, status: true } : p))
+      shuffleCards(
+        setPokemon((prev) =>
+          prev.map((p) => (p.name === name ? { ...p, status: true } : p))
+        )
       );
     } else {
       //Reset current score
       setScores((prev) => ({ ...prev, currentScore: 0 }));
 
       //Reset game board status
-      setPokemon((prev) => prev.map((p) => ({ ...p, status: false })));
+      shuffleCards(
+        setPokemon((prev) => prev.map((p) => ({ ...p, status: false })))
+      );
     }
   }
 
