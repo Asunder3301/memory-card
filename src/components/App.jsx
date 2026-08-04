@@ -36,16 +36,18 @@ export function App() {
   }, []);
 
   function shuffleCards(array) {
+    const shuffled = [...array];
+
     //Loop through array backwards
-    for (let i = array.length - 1; i > 0; i--) {
+    for (let i = shuffled.length - 1; i > 0; i--) {
       //Pick random index from 0 to i
       const j = Math.floor(Math.random() * (i + 1));
 
       //Swap elements
-      [array[i], array[j]] = [array[j], array[i]];
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
 
-    return array;
+    return shuffled;
   }
 
   function handleClick(name) {
