@@ -2,28 +2,29 @@ import { useEffect, useState } from "react";
 import { Card } from "./Card.jsx";
 import { PokeAPI } from "../modules/pokeapi.js";
 
+const initial_pokemon = [
+  { name: "togepi", status: false },
+  { name: "rayquaza", status: false },
+  { name: "sableye", status: false },
+  { name: "lucario", status: false },
+  { name: "marshadow", status: false },
+  { name: "crobat", status: false },
+  { name: "wynaut", status: false },
+  { name: "charmander", status: false },
+  { name: "suicune", status: false },
+  { name: "mismagius", status: false },
+  { name: "latias", status: false },
+  { name: "mantyke", status: false },
+];
+
 export function App() {
   const [scores, setScores] = useState({ currentScore: 0, highScore: 0 });
-
-  const [pokemon, setPokemon] = useState([
-    { name: "togepi", status: false },
-    { name: "rayquaza", status: false },
-    { name: "sableye", status: false },
-    { name: "lucario", status: false },
-    { name: "marshadow", status: false },
-    { name: "crobat", status: false },
-    { name: "wynaut", status: false },
-    { name: "charmander", status: false },
-    { name: "suicune", status: false },
-    { name: "mismagius", status: false },
-    { name: "latias", status: false },
-    { name: "mantyke", status: false },
-  ]);
+  const [pokemon, setPokemon] = useState([]);
 
   useEffect(() => {
     async function loadImages() {
       const updatedPokemon = await Promise.all(
-        pokemon.map(async (p) => {
+        initial_pokemon.map(async (p) => {
           const data = await PokeAPI.getData(p.name);
           return { ...p, url: data.image };
         })
