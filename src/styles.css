@@ -2,6 +2,17 @@
   color-scheme: dark;
 }
 
+h1, p { margin: 0; }
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+#scores {
+  align-self: flex-end;
+}
+
 body {
   min-height: 100vh;
 }
